@@ -127,18 +127,14 @@ function painting_draw() {
     drawPoint(j[0], j[1], 'Ж');
     drawPoint(m[0], m[1], 'М');
     drawPoint(j1[0] , j1[1], 'Ж1');
-    drawPoint(j2[0] , j2[1], 'Ж2');
     drawPoint(z[0] , z[1], 'З');
     drawPoint(z1[0], z1[1], 'З1');
     drawPoint(n1[0], n1[1], 'Н1');
     drawPoint(m1[0], m1[1], 'М1');
-    drawPoint(tochka[0], tochka[1], 'точка');
     drawPoint(p1[0] ,p1[1], 'П1');
     drawPoint(p2[0], p2[1], 'П2');
     drawPoint(m2[0],m2[1], 'М2');
-    drawPoint(m21[0] , m21[1], 'М21');
     drawPoint(sk[0], sk[1], 'СК');
-    drawPoint(tochka2[0], tochka2[1], 'точка2');
     context.stroke();
 
     //десятый пункт
