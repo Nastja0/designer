@@ -180,7 +180,7 @@ function drawPoint(x, y, label) {
         var textX = pointX;
         var textY = Math.round(pointY - size - 3);
 
-        context.font = 'Italic 10px Arial';
+        context.font = 'Italic 14px Arial';
         context.fillStyle = color;
         context.textAlign = 'center';
         context.fillText(label, textX, textY);
