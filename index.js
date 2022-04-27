@@ -5,8 +5,8 @@ let y0 = 30;
 
 function painting_init() {
     canvas = document.querySelector('.painting');
-    canvas.width = 600;
-    canvas.heighy = 600;
+    canvas.width = +document.querySelector('input[name="ОН"]').value * 10 * 3 / 2;
+    canvas.heighy = +document.querySelector('input[name="ОВ"]').value * 10 + 100;
     context = canvas.getContext("2d");
     context.strokeStyle = "black";
 
@@ -39,14 +39,14 @@ function painting_draw() {
     let p = [x0 + po + os, y0];
     let j = [x0 + po + os, y0 + pj];
     let m = [(n[0] + p[0]) / 2, (n[1] + p[1]) / 2];
-    let j1 = [m[0],m[1] + mj1];
+    let j1 = [m[0], m[1] + mj1];
     let j2 = [(j[0] + j1[0]) / 2, j[1]];
     let z = [v[0] + vz, v[1]];
     let z1 = [v[0] - vz1, v[1]];
-    let n1 = [n[0] ,n[1] + ov];
+    let n1 = [n[0], n[1] + ov];
     let m1 = [n1[0], y0 + ov - n1m1];
     let tochka = [(n[0] + m[0]) / 2, (n[1] + m[1]) / 2];
-    let p1 = [n1[0] + zz1 / 3 ,n1[1]];
+    let p1 = [n1[0] + zz1 / 3, n1[1]];
     let p2 = [n1[0] - zz1 / 3 * 2, n1[1]];
     let m2 = [n[0], j1[1]];
     let m21 = [m2[0] + zz1 / 3 * 2, m2[1]];
@@ -126,19 +126,19 @@ function painting_draw() {
     drawPoint(p[0], p[1], 'П');
     drawPoint(j[0], j[1], 'Ж');
     drawPoint(m[0], m[1], 'М');
-    drawPoint(j1[0] , j1[1], 'Ж1');
-    drawPoint(z[0] , z[1], 'З');
+    drawPoint(j1[0], j1[1], 'Ж1');
+    drawPoint(z[0], z[1], 'З');
     drawPoint(z1[0], z1[1], 'З1');
     drawPoint(n1[0], n1[1], 'Н1');
     drawPoint(m1[0], m1[1], 'М1');
-    drawPoint(p1[0] ,p1[1], 'П1');
+    drawPoint(p1[0], p1[1], 'П1');
     drawPoint(p2[0], p2[1], 'П2');
-    drawPoint(m2[0],m2[1], 'М2');
+    drawPoint(m2[0], m2[1], 'М2');
     drawPoint(sk[0], sk[1], 'СК');
     context.stroke();
 
     //десятый пункт
-    context.lineWidth=3;
+    context.lineWidth = 3;
 
     context.moveTo(o[0], o[1]);
     context.quadraticCurveTo(o[0] - 10, g[1] - 10, g[0], g[1]);
@@ -162,19 +162,18 @@ function drawPoint(x, y, label) {
     let color = '#000';
     let size = 2;
 
-    // to increase smoothing for numbers with decimal part
-    var pointX = Math.round(x);
-    var pointY = Math.round(y);
+    let pointX = Math.round(x);
+    let pointY = Math.round(y);
 
     context.beginPath();
     context.fillStyle = color;
-    context.arc(pointX, pointY, size, 0 * Math.PI, 2 * Math.PI);
+    context.arc(pointX, pointY, size, 0, 2 * Math.PI);
     context.fill();
 
 
     if (label) {
-        var textX = pointX;
-        var textY = Math.round(pointY - size - 3);
+        let textX = pointX;
+        let textY = Math.round(pointY - size - 3);
 
         context.font = 'Italic 14px Arial';
         context.fillStyle = color;
@@ -183,11 +182,26 @@ function drawPoint(x, y, label) {
     }
 }
 
+function download(){
+    let image = canvas.toDataURL();
+    let tmpLink = document.createElement( 'a' );
+    tmpLink.download = 'designer.png';
+    tmpLink.href = image;
+
+    document.body.appendChild( tmpLink );
+    tmpLink.click();
+    document.body.removeChild( tmpLink );
+}
+
 
 painting_init();
 painting_draw();
-document.querySelector('.button')
+document.querySelector('.button-pain')
     .addEventListener('click', function () {
         painting_init();
         painting_draw();
+    })
+document.querySelector('.button-dow')
+    .addEventListener('click', function () {
+        download();
     })
