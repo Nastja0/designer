@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Конструктор</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<form class="form">
+    <fieldset class="sizes">
+        <p><b>Введите параметры:</b></p>
+        <div class="param">
+            <ul class="type">Длина спины от ошейника до основания хвоста</ul>
+            <ul class="size"><input type="number" size="2" name="ОН" min="1" max="300" value="36"></ul>
+        </div>
+        <div class="param">
+            <ul class="type">Высота в холке</ul>
+            <ul class="size"><input type="number" size="2" name="ОВ" min="1" max="300" value="35"></ul>
+        </div>
+        <div class="param">
+            <ul class="type">Расстояние от ошейника спереди до линии пола</ul>
+            <ul class="size"><input type="number" size="2" name="Г" min="1" max="300" value="23"></ul>
+        </div>
+        <div class="param">
+            <ul class="type">Ширина груди</ul>
+            <ul class="size"><input type="number" size="2" name="Шг" min="1" max="300" value="18"></ul>
+        </div>
+        <div class="param">
+            <ul class="type">Ширина между передними лапами</ul>
+            <ul class="size"><input type="number" size="2" name="Шпл" min="1" max="300" value="11"></ul>
+        </div>
+        <div class="param">
+            <ul class="type">Обхват груди</ul>
+            <ul class="size"><input type="number" size="2" name="Ог" min="1" max="300" value="49"></ul>
+        </div>
+        <div class="param">
+            <ul class="type">Расстояние от ошейника до линии начала передней лапы</ul>
+            <ul class="size"><input type="number" size="2" name="ПО" min="1" max="300" value="10"></ul>
+        </div>
+        <div class="param">
+            <ul class="type">Обхват талии</ul>
+            <ul class="size"><input type="number" size="2" name="От" min="1" max="300" value="41"></ul>
+        </div>
+        <div class="param">
+            <ul class="type">Расстояние от пола вверх до основания хвоста</ul>
+            <ul class="size"><input type="number" size="2" name="Н1М1" min="1" max="300" value="31"></ul>
+        </div>
+        <div class="param">
+            <ul class="type">Обхват запястья передней лапы</ul>
+            <ul class="size"><input type="number" size="2" name="ЗЗ1" min="1" max="300" value="9"></ul>
+        </div>
+        <button type="button" class="button">Чертить</button>
+    </fieldset>
+    <canvas class="painting" width="600" height="600"></canvas>
+</form>
+<script src="index.js"></script>
+</body>
+</html>
