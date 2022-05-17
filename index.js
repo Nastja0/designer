@@ -1,7 +1,13 @@
 let canvas;
 let context;
-let x0 = 30;
-let y0 = 30;
+let x0 = 50;
+let y0 = 50;
+
+
+let s, o, n, v, g, p, j, m, j1, j2, z, z1, n1, m1,
+    tochka, p2, m2, m21, sk, tochka2, os, ov;
+let tochka0;
+let tochka01;
 
 function painting_init() {
     canvas = document.querySelector('.painting');
@@ -9,50 +15,10 @@ function painting_init() {
     canvas.heighy = +document.querySelector('input[name="ОВ"]').value * 10 + 100;
     context = canvas.getContext("2d");
     context.strokeStyle = "black";
-
 }
 
-
 function painting_draw() {
-    let on = +document.querySelector('input[name="ОН"]').value * 10;
-    let ov = +document.querySelector('input[name="ОВ"]').value * 10;
-    let gg = +document.querySelector('input[name="Г"]').value * 10;
-    let shg = +document.querySelector('input[name="Шг"]').value * 10;
-    let shpl = +document.querySelector('input[name="Шпл"]').value * 10;
-    let og = +document.querySelector('input[name="Ог"]').value * 10;
-    let po = +document.querySelector('input[name="ПО"]').value * 10;
-    let ot = +document.querySelector('input[name="От"]').value * 10;
-    let n1m1 = +document.querySelector('input[name="Н1М1"]').value * 10;
-    let zz1 = +document.querySelector('input[name="ЗЗ1"]').value * 10;
-
-    let os = (shg - shpl) / 2;
-    let pj = (og - shpl) / 2;
-    let mj1 = (ot - shpl) / 2;
-    let vz = zz1 / 3;
-    let vz1 = zz1 / 3 * 2;
-
-    let s = [x0, y0];
-    let o = [x0 + os, y0];
-    let n = [x0 + os + on, y0];
-    let v = [x0 + os, y0 + ov];
-    let g = [x0, ov - gg];
-    let p = [x0 + po + os, y0];
-    let j = [x0 + po + os, y0 + pj];
-    let m = [(n[0] + p[0]) / 2, (n[1] + p[1]) / 2];
-    let j1 = [m[0], m[1] + mj1];
-    let j2 = [(j[0] + j1[0]) / 2, j[1]];
-    let z = [v[0] + vz, v[1]];
-    let z1 = [v[0] - vz1, v[1]];
-    let n1 = [n[0], n[1] + ov];
-    let m1 = [n1[0], y0 + ov - n1m1];
-    let tochka = [(n[0] + m[0]) / 2, (n[1] + m[1]) / 2];
-    let p1 = [n1[0] + zz1 / 3, n1[1]];
-    let p2 = [n1[0] - zz1 / 3 * 2, n1[1]];
-    let m2 = [n[0], j1[1]];
-    let m21 = [m2[0] + zz1 / 3 * 2, m2[1]];
-    let sk = [m21[0], j[1]];
-    let tochka2 = [p1[0], m21[1]];
-
+    getPoint();
     context.strokeStyle = "red";
     //первый пункт
     context.moveTo(o[0], o[1]);
@@ -136,10 +102,10 @@ function painting_draw() {
     drawPoint(m2[0], m2[1], 'М2');
     drawPoint(sk[0], sk[1], 'СК');
     context.stroke();
+}
 
-    //десятый пункт
-    context.lineWidth = 3;
-
+function drawDetail1(){
+    context.lineWidth = 1;
     context.moveTo(o[0], o[1]);
     context.quadraticCurveTo(o[0] - 10, g[1] - 10, g[0], g[1]);
     context.lineTo(z1[0], z1[1]);
@@ -156,6 +122,113 @@ function painting_draw() {
     context.lineTo(o[0], o[1]);
     context.stroke();
 
+    context.moveTo(o[0] - 20, o[1] - 20);
+    context.quadraticCurveTo(o[0] - 10 - 10, g[1] - 10 - 20, g[0] - 20, g[1]);
+    context.lineTo(z1[0] - 20, z1[1] + 20);
+    context.lineTo(z[0] + 20, z[1] + 20);
+    context.lineTo(j[0] + 20, j[1]+ 20);
+    context.lineTo(j2[0]+ 10, j2[1]+ 20);
+    context.lineTo(j1[0] - 5, j1[1] + 20);
+    context.quadraticCurveTo((j1[0] + p2[0]) / 2 + (p2[0] - j1[0]) / 3 - 20, (j1[1] + p2[1]) / 2 + 10, p2[0] - 20, p2[1] + 20);
+    context.lineTo(p1[0] + 20, p1[1] + 20);
+    context.lineTo(sk[0] + 20, sk[1]);
+    context.lineTo(tochka2[0] + 20, tochka2[1]);
+    context.quadraticCurveTo((tochka2[0] + m1[0]) / 2 + (tochka2[0] - m1[0]) / 3 + 20, (tochka2[1] + m1[1]) / 2 - 20, m1[0] + 10, m1[1] - 20);
+    context.lineTo(tochka[0], tochka[1] - 20);
+    context.lineTo(o[0] - 20, o[1] - 20);
+    context.stroke();
+}
+
+function drawDetail2(){
+    context.lineWidth = 1;
+    context.moveTo(tochka0[0], tochka0[1] + ov);
+    context.lineTo(z1[0], z1[1] + ov);
+    context.lineTo(z[0], z[1] + ov);
+    context.lineTo(j[0], j[1] + ov);
+    context.lineTo(tochka0[0], tochka0[1] + ov);
+
+    context.moveTo(j1[0], j1[1] + ov);
+    context.quadraticCurveTo((j1[0] + p2[0]) / 2 + (p2[0] - j1[0]) / 3, (j1[1] + p2[1]) / 2 + ov, p2[0], p2[1] + ov);
+    context.lineTo(p1[0], p1[1] + ov);
+    context.lineTo(sk[0], sk[1] + ov);
+    context.lineTo(tochka2[0], tochka2[1] + ov);
+    context.lineTo(j1[0], j1[1] + ov);
+    context.stroke();
+
+    context.moveTo(tochka0[0] - 20, tochka0[1] - 20 + ov);
+    context.lineTo(z1[0] - 20, z1[1] + 20 + ov);
+    context.lineTo(z[0] + 20, z[1] + 20 + ov);
+    context.lineTo(j[0] + 30, j[1] + ov - 20);
+    context.lineTo(tochka0[0] - 20, tochka0[1] - 20 + ov);
+
+    context.moveTo(j1[0] - 30, j1[1] - 20 + ov);
+    context.quadraticCurveTo((j1[0] + p2[0]) / 2 + (p2[0] - j1[0]) / 3 - 20, (j1[1] + p2[1]) / 2 + 10 + ov, p2[0] - 20, p2[1] + 20 + ov);
+    context.lineTo(p1[0] + 20, p1[1] + 20 + ov);
+    context.lineTo(sk[0] + 20, sk[1] + ov);
+    context.lineTo(tochka2[0] + 10, tochka2[1] - 20 + ov);
+    context.lineTo(j1[0] - 30, j1[1] - 20 + ov);
+    context.stroke();
+}
+
+function drawDetail3(){
+    context.lineWidth = 1;
+    context.moveTo(x0 , tochka0[1] + ov*2);
+    context.quadraticCurveTo(x0 + ov * 2/ 5, tochka0[1] + ov*2 - 50, x0 + ov, tochka0[1] + ov*2)
+    context.lineTo(x0 + ov, tochka0[1] + tochka01[1] + ov*2);
+    context.quadraticCurveTo(x0 + ov * 2/ 5, tochka0[1]+ tochka01[1] + ov*2 + 50, x0 , tochka0[1] + tochka01[1] + ov*2)
+    context.lineTo(x0 , tochka0[1] + ov*2);
+    context.stroke();
+
+    context.moveTo(x0 - 20 , tochka0[1] + ov*2 - 20);
+    context.quadraticCurveTo(x0 + ov * 2/ 5, tochka0[1] + ov*2 - 50 - 20, x0 + ov + 20, tochka0[1] + ov*2 - 20)
+    context.lineTo(x0 + ov + 20, tochka0[1] + tochka01[1] + ov*2 + 20);
+    context.quadraticCurveTo(x0 + ov * 2/ 5, tochka0[1]+ tochka01[1] + ov*2 + 50 + 20, x0 - 20, tochka0[1] + tochka01[1] + ov*2 + 20)
+    context.lineTo(x0 - 20, tochka0[1] + ov*2 - 20);
+    context.stroke();
+}
+
+function getPoint(){
+    let on = +document.querySelector('input[name="ОН"]').value * 10;
+    ov = +document.querySelector('input[name="ОВ"]').value * 10;
+    let gg = +document.querySelector('input[name="Г"]').value * 10;
+    let shg = +document.querySelector('input[name="Шг"]').value * 10;
+    let shpl = +document.querySelector('input[name="Шпл"]').value * 10;
+    let og = +document.querySelector('input[name="Ог"]').value * 10;
+    let po = +document.querySelector('input[name="ПО"]').value * 10;
+    let ot = +document.querySelector('input[name="От"]').value * 10;
+    let n1m1 = +document.querySelector('input[name="Н1М1"]').value * 10;
+    let zz1 = +document.querySelector('input[name="ЗЗ1"]').value * 10;
+
+    os = (shg - shpl) / 2;
+    let pj = (og - shpl) / 2;
+    let mj1 = (ot - shpl) / 2;
+    let vz = zz1 / 3;
+    let vz1 = zz1 / 3 * 2;
+
+    s = [x0, y0];
+    o = [x0 + os, y0];
+    n = [x0 + os + on, y0];
+    v = [x0 + os, y0 + ov];
+    g = [x0, ov - gg];
+    p = [x0 + po + os, y0];
+    j = [x0 + po + os, y0 + pj];
+    m = [(n[0] + p[0]) / 2, (n[1] + p[1]) / 2];
+    j1 = [m[0], m[1] + mj1];
+    j2 = [(j[0] + j1[0]) / 2, j[1]];
+    z = [v[0] + vz, v[1]];
+    z1 = [v[0] - vz1, v[1]];
+    n1 = [n[0], n[1] + ov];
+    m1 = [n1[0], y0 + ov - n1m1];
+    tochka = [(n[0] + m[0]) / 2, (n[1] + m[1]) / 2];
+    p1 = [n1[0] + zz1 / 3, n1[1]];
+    p2 = [n1[0] - zz1 / 3 * 2, n1[1]];
+    m2 = [n[0], j1[1]];
+    m21 = [m2[0] + zz1 / 3 * 2, m2[1]];
+    sk = [m21[0], j[1]];
+    tochka2 = [p1[0], m21[1]];
+
+    tochka0 = [(g[0] + z1[0]) / 2, j[1]];
+    tochka01 =[0, shpl];
 }
 
 function drawPoint(x, y, label) {
@@ -195,13 +268,26 @@ function download(){
 
 
 painting_init();
-painting_draw();
 document.querySelector('.button-pain')
     .addEventListener('click', function () {
         painting_init();
         painting_draw();
+        drawDetail1();
+        drawDetail2();
+        drawDetail3();
     })
 document.querySelector('.button-dow')
     .addEventListener('click', function () {
         download();
     })
+
+const modalCloseBtn = document.getElementById('closeButton');
+const modalOpenBtn = document.getElementById('openButton');
+const modalWindow = document.getElementById('modalWindow');
+modalCloseBtn.addEventListener('click', function () {
+    modalWindow.style.display = 'none';
+})
+modalOpenBtn.addEventListener('click', function (event) {
+    modalWindow.style.display = 'block';
+    event.preventDefault();
+})
