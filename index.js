@@ -1,193 +1,314 @@
 let canvas;
 let context;
-let x0 = 50;
-let y0 = 50;
+let x;
 
 
 let s, o, n, v, g, p, j, m, j1, j2, z, z1, n1, m1,
     tochka, p2, m2, m21, sk, tochka2, os, ov;
 let tochka0;
 let tochka01;
+let rol;
+let shk, wk;
+let k = 3;
 
 function painting_init() {
     canvas = document.querySelector('.painting');
-    canvas.width = +document.querySelector('input[name="ОН"]').value * 10 * 3 / 2;
-    canvas.heighy = +document.querySelector('input[name="ОВ"]').value * 10 + 100;
+    canvas.width = +document.querySelector('input[name="ОН"]').value * 10 * 2;
+    if(hood.querySelector('input').checked){
+        k +=0.9;
+    }
+    if(pocket.querySelector('input').checked){
+        k+=0.5;
+    }
+    canvas.height = +document.querySelector('input[name="ОВ"]').value * 10 * k + 100;
     context = canvas.getContext("2d");
     context.strokeStyle = "black";
+    x = [50, 50];
 }
 
 function painting_draw() {
-    getPoint();
+    getPoints();
+    x[0] = z[0] - z1[0];
     context.strokeStyle = "red";
     //первый пункт
-    context.moveTo(o[0], o[1]);
-    context.lineTo(n[0], n[1]);
-    context.moveTo(o[0], o[1]);
-    context.lineTo(v[0], v[1]);
+    context.moveTo(getPoint(o)[0], getPoint(o)[1]);
+    context.lineTo(getPoint(n)[0], getPoint(n)[1]);
+    context.moveTo(getPoint(o)[0], getPoint(o)[1]);
+    context.lineTo(getPoint(v)[0], getPoint(v)[1]);
     context.stroke();
 
     //второй пункт
-    context.moveTo(o[0], o[1]);
-    context.lineTo(s[0], s[1]);
-    context.lineTo(v[0] - os, v[1]);
+    context.moveTo(getPoint(o)[0], getPoint(o)[1]);
+    context.lineTo(getPoint(s)[0], getPoint(s)[1]);
+    context.lineTo(getPoint(v)[0] - os, getPoint(v)[1]);
     context.stroke();
 
     //третий пункт
-    context.moveTo(p[0], p[1]);
-    context.lineTo(j[0], j[1]);
-    context.moveTo(o[0], o[1]);
-    context.quadraticCurveTo(o[0] - 10, g[1] - 10, g[0], g[1]);
+    context.moveTo(getPoint(p)[0], getPoint(p)[1]);
+    context.lineTo(getPoint(j)[0], getPoint(j)[1]);
+    context.moveTo(getPoint(o)[0], getPoint(o)[1]);
+    context.quadraticCurveTo(getPoint(o)[0] - 10, g[1] - 10, getPoint(g)[0], g[1]);
     context.stroke();
 
     //четвертый пункт
-    context.moveTo(m[0], m[1]);
-    context.lineTo(j1[0], j1[1]);
-    context.lineTo(j2[0], j2[1]);
-    context.lineTo(j[0], j[1]);
-    context.lineTo(g[0], j[1]);
+    context.moveTo(getPoint(m)[0], getPoint(m)[1]);
+    context.lineTo(getPoint(j1)[0], getPoint(j1)[1]);
+    context.lineTo(getPoint(j2)[0], getPoint(j2)[1]);
+    context.lineTo(getPoint(j)[0], getPoint(j)[1]);
+    context.lineTo(getPoint(g)[0], getPoint(j)[1]);
     context.stroke();
 
     //пятый пункт
-    context.moveTo(g[0], g[1]);
-    context.lineTo(z1[0], z1[1]);
-    context.lineTo(z[0], z[1]);
-    context.lineTo(j[0], j[1]);
+    context.moveTo(getPoint(g)[0], g[1]);
+    context.lineTo(getPoint(z1)[0], getPoint(z1)[1]);
+    context.lineTo(getPoint(z)[0], getPoint(z)[1]);
+    context.lineTo(getPoint(j)[0], getPoint(j)[1]);
     context.stroke();
 
     //шестой пункт
-    context.moveTo(n[0], n[1]);
-    context.lineTo(n1[0], n1[1]);
-    context.moveTo(m1[0], m1[1]);
-    context.lineTo(tochka[0], tochka[1]);
-    context.moveTo(m21[0], m21[1]);
-    context.lineTo(j1[0], j1[1]);
+    context.moveTo(getPoint(n)[0], getPoint(o)[1]);
+    context.lineTo(getPoint(n1)[0], getPoint(n1)[1]);
+    context.moveTo(getPoint(m1)[0], getPoint(m1)[1]);
+    context.lineTo(getPoint(tochka)[0], getPoint(tochka)[1]);
+    context.moveTo(getPoint(m21)[0], getPoint(m21)[1]);
+    context.lineTo(getPoint(j1)[0], getPoint(j1)[1]);
     context.stroke();
 
     //седьмой пункт
-    context.moveTo(j1[0], j1[1]);
-    context.lineTo(p2[0], p2[1]);
-    context.lineTo(p1[0], p1[1]);
-    context.moveTo(j1[0], j1[1]);
-    context.quadraticCurveTo((j1[0] + p2[0]) / 2 + (p2[0] - j1[0]) / 3, (j1[1] + p2[1]) / 2, p2[0], p2[1]);
+    context.moveTo(getPoint(j1)[0], getPoint(j1)[1]);
+    context.lineTo(getPoint(p2)[0], getPoint(p2)[1]);
+    context.lineTo(getPoint(p1)[0], getPoint(p1)[1]);
+    context.moveTo(getPoint(j1)[0], getPoint(j1)[1]);
+    context.quadraticCurveTo((getPoint(j1)[0] + getPoint(p2)[0]) / 2 + (getPoint(p2)[0] - getPoint(j1)[0]) / 3,
+        (getPoint(j1)[1] + getPoint(p2)[1]) / 2, getPoint(p2)[0], getPoint(p2)[1]);
     context.stroke();
 
     //восьмой пункт
-    context.moveTo(p1[0], p1[1]);
-    context.lineTo(sk[0], sk[1]);
-    context.lineTo(tochka2[0], tochka2[1]);
+    context.moveTo(getPoint(p1)[0], getPoint(p1)[1]);
+    context.lineTo(getPoint(sk)[0], getPoint(sk)[1]);
+    context.lineTo(getPoint(tochka2)[0], getPoint(tochka2)[1]);
     context.stroke();
 
     //девятый пункт
-    context.moveTo(tochka2[0], tochka2[1]);
-    context.quadraticCurveTo((tochka2[0] + m1[0]) / 2 + (tochka2[0] - m1[0]) / 3, (tochka2[1] + m1[1]) / 2, m1[0], m1[1]);
+    context.moveTo(getPoint(tochka2)[0], getPoint(tochka2)[1]);
+    context.quadraticCurveTo((getPoint(tochka2)[0] + getPoint(m1)[0]) / 2 + (getPoint(tochka2)[0] - getPoint(m1)[0]) / 3,
+        (getPoint(tochka2)[1] + getPoint(m1)[1]) / 2, getPoint(m1)[0], getPoint(m1)[1]);
     context.stroke();
 
     context.strokeStyle = "black";
-    drawPoint(s[0], s[1], 'С');
-    drawPoint(o[0], o[1], 'О');
-    drawPoint(n[0], n[1], 'Н');
-    drawPoint(v[0], v[1], 'В');
-    drawPoint(g[0], g[1], 'Г');
-    drawPoint(p[0], p[1], 'П');
-    drawPoint(j[0], j[1], 'Ж');
-    drawPoint(m[0], m[1], 'М');
-    drawPoint(j1[0], j1[1], 'Ж1');
-    drawPoint(z[0], z[1], 'З');
-    drawPoint(z1[0], z1[1], 'З1');
-    drawPoint(n1[0], n1[1], 'Н1');
-    drawPoint(m1[0], m1[1], 'М1');
-    drawPoint(p1[0], p1[1], 'П1');
-    drawPoint(p2[0], p2[1], 'П2');
-    drawPoint(m2[0], m2[1], 'М2');
-    drawPoint(sk[0], sk[1], 'СК');
+    drawPoint(getPoint(s)[0], getPoint(s)[1], 'С');
+    drawPoint(getPoint(o)[0], getPoint(o)[1], 'О');
+    drawPoint(getPoint(n)[0], getPoint(n)[1], 'Н');
+    drawPoint(getPoint(v)[0], getPoint(v)[1], 'В');
+    drawPoint(getPoint(g)[0], g[1], 'Г');
+    drawPoint(getPoint(p)[0], getPoint(p)[1], 'П');
+    drawPoint(getPoint(j)[0], getPoint(j)[1], 'Ж');
+    drawPoint(getPoint(m)[0], getPoint(m)[1], 'М');
+    drawPoint(getPoint(j1)[0], getPoint(j1)[1], 'Ж1');
+    drawPoint(getPoint(z)[0], getPoint(z)[1], 'З');
+    drawPoint(getPoint(z1)[0], getPoint(z1)[1], 'З1');
+    drawPoint(getPoint(n1)[0], getPoint(n1)[1], 'Н1');
+    drawPoint(getPoint(m1)[0], getPoint(m1)[1], 'М1');
+    drawPoint(getPoint(p1)[0], getPoint(p1)[1], 'П1');
+    drawPoint(getPoint(p2)[0], getPoint(p2)[1], 'П2');
+    drawPoint(getPoint(m2)[0], getPoint(m2)[1], 'М2');
+    drawPoint(getPoint(sk)[0], getPoint(sk)[1], 'СК');
     context.stroke();
 }
 
-function drawDetail1(){
+function drawDetail1() {
     context.lineWidth = 1;
-    context.moveTo(o[0], o[1]);
-    context.quadraticCurveTo(o[0] - 10, g[1] - 10, g[0], g[1]);
-    context.lineTo(z1[0], z1[1]);
-    context.lineTo(z[0], z[1]);
-    context.lineTo(j[0], j[1]);
-    context.lineTo(j2[0], j2[1]);
-    context.lineTo(j1[0], j1[1]);
-    context.quadraticCurveTo((j1[0] + p2[0]) / 2 + (p2[0] - j1[0]) / 3, (j1[1] + p2[1]) / 2, p2[0], p2[1]);
-    context.lineTo(p1[0], p1[1]);
-    context.lineTo(sk[0], sk[1]);
-    context.lineTo(tochka2[0], tochka2[1]);
-    context.quadraticCurveTo((tochka2[0] + m1[0]) / 2 + (tochka2[0] - m1[0]) / 3, (tochka2[1] + m1[1]) / 2, m1[0], m1[1]);
-    context.lineTo(tochka[0], tochka[1]);
-    context.lineTo(o[0], o[1]);
+    context.moveTo(getPoint(o)[0], getPoint(o)[1]);
+    context.quadraticCurveTo(getPoint(o)[0] - 10, g[1] - 10, getPoint(g)[0], g[1]);
+    context.lineTo(getPoint(z1)[0], getPoint(z1)[1]);
+    context.lineTo(getPoint(z)[0], getPoint(z)[1]);
+    context.lineTo(getPoint(j)[0], getPoint(j)[1]);
+    context.lineTo(getPoint(j2)[0], getPoint(j2)[1]);
+    context.lineTo(getPoint(j1)[0], getPoint(j1)[1]);
+    context.quadraticCurveTo((getPoint(j1)[0] + getPoint(p2)[0]) / 2 + (getPoint(p2)[0] - getPoint(j1)[0]) / 3,
+        (getPoint(j1)[1] + getPoint(p2)[1]) / 2, getPoint(p2)[0], getPoint(p2)[1]);
+    context.lineTo(getPoint(p1)[0], getPoint(p1)[1]);
+    context.lineTo(getPoint(sk)[0], getPoint(sk)[1]);
+    context.lineTo(getPoint(tochka2)[0], getPoint(tochka2)[1]);
+    context.quadraticCurveTo((getPoint(tochka2)[0] + getPoint(m1)[0]) / 2 + (getPoint(tochka2)[0] - getPoint(m1)[0]) / 3,
+        (getPoint(tochka2)[1] + getPoint(m1)[1]) / 2, getPoint(m1)[0], getPoint(m1)[1]);
+    context.lineTo(getPoint(tochka)[0], getPoint(tochka)[1]);
+    context.lineTo(getPoint(o)[0], getPoint(o)[1]);
     context.stroke();
 
-    context.moveTo(o[0] - 20, o[1] - 20);
-    context.quadraticCurveTo(o[0] - 10 - 10, g[1] - 10 - 20, g[0] - 20, g[1]);
-    context.lineTo(z1[0] - 20, z1[1] + 20);
-    context.lineTo(z[0] + 20, z[1] + 20);
-    context.lineTo(j[0] + 20, j[1]+ 20);
-    context.lineTo(j2[0]+ 10, j2[1]+ 20);
-    context.lineTo(j1[0] - 5, j1[1] + 20);
-    context.quadraticCurveTo((j1[0] + p2[0]) / 2 + (p2[0] - j1[0]) / 3 - 20, (j1[1] + p2[1]) / 2 + 10, p2[0] - 20, p2[1] + 20);
-    context.lineTo(p1[0] + 20, p1[1] + 20);
-    context.lineTo(sk[0] + 20, sk[1]);
-    context.lineTo(tochka2[0] + 20, tochka2[1]);
-    context.quadraticCurveTo((tochka2[0] + m1[0]) / 2 + (tochka2[0] - m1[0]) / 3 + 20, (tochka2[1] + m1[1]) / 2 - 20, m1[0] + 10, m1[1] - 20);
-    context.lineTo(tochka[0], tochka[1] - 20);
-    context.lineTo(o[0] - 20, o[1] - 20);
+    context.moveTo(getPoint(o)[0] - 10, getPoint(o)[1] - 10);
+    context.quadraticCurveTo(getPoint(o)[0] - 10 - 5, g[1] - 10 - 10,
+        getPoint(g)[0] - 10, g[1] - 5);
+    context.lineTo(getPoint(z1)[0] - 10, getPoint(z1)[1] + 10);
+    context.lineTo(getPoint(z)[0] + 10, getPoint(z)[1] + 10);
+    context.lineTo(getPoint(j)[0] + 10, getPoint(j)[1] + 10);
+    context.lineTo(getPoint(j2)[0] + 10, getPoint(j2)[1] + 10);
+    context.lineTo(getPoint(j1)[0] - 5, getPoint(j1)[1] + 15);
+    context.quadraticCurveTo((getPoint(j1)[0] + getPoint(p2)[0]) / 2 + (getPoint(p2)[0] - getPoint(j1)[0]) / 3 - 10,
+        (getPoint(j1)[1] + getPoint(p2)[1]) / 2 + 5, getPoint(p2)[0] - 10, getPoint(p2)[1] + 10);
+    context.lineTo(getPoint(p1)[0] + 10, getPoint(p1)[1] + 10);
+    context.lineTo(getPoint(sk)[0] + 10, getPoint(sk)[1]);
+    context.lineTo(getPoint(tochka2)[0] + 10, getPoint(tochka2)[1]);
+    context.quadraticCurveTo((getPoint(tochka2)[0] + getPoint(m1)[0]) / 2 + (getPoint(tochka2)[0] - getPoint(m1)[0]) / 3 + 10,
+        (getPoint(tochka2)[1] + getPoint(m1)[1]) / 2 - 10, getPoint(m1)[0] + 5, getPoint(m1)[1] - 10);
+    context.lineTo(getPoint(tochka)[0], getPoint(tochka)[1] - 10);
+    context.lineTo(getPoint(o)[0] - 10, getPoint(o)[1] - 10);
     context.stroke();
 }
 
-function drawDetail2(){
+function drawDetail2() {
+    x[1] += ov * 4 / 5;
     context.lineWidth = 1;
-    context.moveTo(tochka0[0], tochka0[1] + ov);
-    context.lineTo(z1[0], z1[1] + ov);
-    context.lineTo(z[0], z[1] + ov);
-    context.lineTo(j[0], j[1] + ov);
-    context.lineTo(tochka0[0], tochka0[1] + ov);
+    context.moveTo(getPoint(tochka0)[0], getPoint(tochka0)[1]);
+    context.lineTo(getPoint(z1)[0], getPoint(z1)[1]);
+    context.lineTo(getPoint(z)[0], getPoint(z)[1]);
+    context.lineTo(getPoint(j)[0], getPoint(j)[1]);
+    context.lineTo(getPoint(tochka0)[0], getPoint(tochka0)[1]);
 
-    context.moveTo(j1[0], j1[1] + ov);
-    context.quadraticCurveTo((j1[0] + p2[0]) / 2 + (p2[0] - j1[0]) / 3, (j1[1] + p2[1]) / 2 + ov, p2[0], p2[1] + ov);
-    context.lineTo(p1[0], p1[1] + ov);
-    context.lineTo(sk[0], sk[1] + ov);
-    context.lineTo(tochka2[0], tochka2[1] + ov);
-    context.lineTo(j1[0], j1[1] + ov);
+    context.moveTo(getPoint(j1)[0], getPoint(j1)[1]);
+    context.quadraticCurveTo((getPoint(j1)[0] + getPoint(p2)[0]) / 2 + (getPoint(p2)[0] - getPoint(j1)[0]) / 3,
+        (getPoint(j1)[1] + getPoint(p2)[1]) / 2, getPoint(p2)[0], getPoint(p2)[1]);
+    context.lineTo(getPoint(p1)[0], getPoint(p1)[1]);
+    context.lineTo(getPoint(sk)[0], getPoint(sk)[1]);
+    context.lineTo(getPoint(tochka2)[0], getPoint(tochka2)[1]);
+    context.lineTo(getPoint(j1)[0], getPoint(j1)[1]);
     context.stroke();
 
-    context.moveTo(tochka0[0] - 20, tochka0[1] - 20 + ov);
-    context.lineTo(z1[0] - 20, z1[1] + 20 + ov);
-    context.lineTo(z[0] + 20, z[1] + 20 + ov);
-    context.lineTo(j[0] + 30, j[1] + ov - 20);
-    context.lineTo(tochka0[0] - 20, tochka0[1] - 20 + ov);
+    context.moveTo(getPoint(tochka0)[0] - 10, getPoint(tochka0)[1] - 10);
+    context.lineTo(getPoint(z1)[0] - 10, getPoint(z1)[1] + 10);
+    context.lineTo(getPoint(z)[0] + 10, getPoint(z)[1] + 10);
+    context.lineTo(getPoint(j)[0] + 15, getPoint(j)[1] - 10);
+    context.lineTo(getPoint(tochka0)[0] - 10, getPoint(tochka0)[1] - 10);
 
-    context.moveTo(j1[0] - 30, j1[1] - 20 + ov);
-    context.quadraticCurveTo((j1[0] + p2[0]) / 2 + (p2[0] - j1[0]) / 3 - 20, (j1[1] + p2[1]) / 2 + 10 + ov, p2[0] - 20, p2[1] + 20 + ov);
-    context.lineTo(p1[0] + 20, p1[1] + 20 + ov);
-    context.lineTo(sk[0] + 20, sk[1] + ov);
-    context.lineTo(tochka2[0] + 10, tochka2[1] - 20 + ov);
-    context.lineTo(j1[0] - 30, j1[1] - 20 + ov);
+
+    context.moveTo(getPoint(j1)[0] - 15, getPoint(j1)[1] - 10);
+    context.quadraticCurveTo((getPoint(j1)[0] + getPoint(p2)[0]) / 2 + (getPoint(p2)[0] - getPoint(j1)[0]) / 3 - 10,
+        (getPoint(j1)[1] + getPoint(p2)[1]) / 2 + 5, getPoint(p2)[0] - 10, getPoint(p2)[1] + 10);
+    context.lineTo(getPoint(p1)[0] + 10, getPoint(p1)[1] + 10);
+    context.lineTo(getPoint(sk)[0] + 10, getPoint(sk)[1]);
+    context.lineTo(getPoint(tochka2)[0] + 5, getPoint(tochka2)[1] - 10);
+    context.lineTo(getPoint(j1)[0] - 15, getPoint(j1)[1] - 10);
     context.stroke();
 }
 
-function drawDetail3(){
+function drawDetail3() {
+    x[1] += ov * 4 / 3;
     context.lineWidth = 1;
-    context.moveTo(x0 , tochka0[1] + ov*2);
-    context.quadraticCurveTo(x0 + ov * 2/ 5, tochka0[1] + ov*2 - 50, x0 + ov, tochka0[1] + ov*2)
-    context.lineTo(x0 + ov, tochka0[1] + tochka01[1] + ov*2);
-    context.quadraticCurveTo(x0 + ov * 2/ 5, tochka0[1]+ tochka01[1] + ov*2 + 50, x0 , tochka0[1] + tochka01[1] + ov*2)
-    context.lineTo(x0 , tochka0[1] + ov*2);
+    context.moveTo(x[0], x[1]);
+    context.quadraticCurveTo(x[0] + ov * 2 / 5, x[1] - 50,
+        x[0] + ov, x[1])
+    context.lineTo(getPoint(tochka01)[0] + ov, getPoint(tochka01)[1]);
+    context.quadraticCurveTo(x[0] + ov * 2 / 5, getPoint(tochka01)[1] + 50,
+        getPoint(tochka01)[0], getPoint(tochka01)[1])
+    context.lineTo(x[0], x[1]);
     context.stroke();
 
-    context.moveTo(x0 - 20 , tochka0[1] + ov*2 - 20);
-    context.quadraticCurveTo(x0 + ov * 2/ 5, tochka0[1] + ov*2 - 50 - 20, x0 + ov + 20, tochka0[1] + ov*2 - 20)
-    context.lineTo(x0 + ov + 20, tochka0[1] + tochka01[1] + ov*2 + 20);
-    context.quadraticCurveTo(x0 + ov * 2/ 5, tochka0[1]+ tochka01[1] + ov*2 + 50 + 20, x0 - 20, tochka0[1] + tochka01[1] + ov*2 + 20)
-    context.lineTo(x0 - 20, tochka0[1] + ov*2 - 20);
+    context.moveTo(x[0] - 10, x[1]-10);
+    context.quadraticCurveTo(x[0] + ov * 2 / 5, x[1] - 50 -10,
+        x[0] + ov + 10, x[1] - 10)
+    context.lineTo(getPoint(tochka01)[0] + ov + 10, getPoint(tochka01)[1] + 10);
+    context.quadraticCurveTo(x[0] + ov * 2 / 5, getPoint(tochka01)[1] + 50 + 10,
+        getPoint(tochka01)[0] - 10, getPoint(tochka01)[1] + 10)
+    context.lineTo(x[0] - 10, x[1]-10);
     context.stroke();
 }
 
-function getPoint(){
+function drawDetail4(){
+    x[1] += ov;
+
+    context.lineWidth = 1;
+    context.moveTo(x[0], x[1]);
+    context.quadraticCurveTo(x[0] + rol * 3/ 5, x[1] - rol / 6,
+        x[0] + rol / 3, x[1] + rol * 7/12);
+    context.quadraticCurveTo(x[0] + rol / 4, x[1] + rol * 7/12,
+        x[0] + rol / 5, x[1] + rol*7/11);
+    context.quadraticCurveTo(x[0] + rol / 8, x[1] + rol*7/10,
+        x[0] + rol / 20, x[1] + rol *2/3);
+    context.lineTo(x[0], x[1]);
+    context.stroke();
+
+    context.moveTo(x[0] - 10, x[1] - 10);
+    context.quadraticCurveTo(x[0] + rol * 3/ 5 + 20, x[1] - rol / 6 - 20,
+        x[0] + rol / 3 + 10, x[1] + rol * 7/12 + 10);
+    context.quadraticCurveTo(x[0] + rol / 4, x[1] + rol * 7/12 + 10,
+        x[0] + rol / 5, x[1] + rol*7/11 + 15);
+    context.quadraticCurveTo(x[0] + rol / 8, x[1] + rol*7/10 + 10,
+        x[0] + rol / 20 - 10, x[1] + rol *2/3 + 10);
+    context.lineTo(x[0] - 10, x[1] - 10);
+    context.stroke();
+
+    context.moveTo(x[0] + rol *2/ 3, x[1]);
+    context.lineTo(x[0]+ rol *2/ 3 + rol, x[1]);
+    context.lineTo(x[0]+ rol *2/ 3 + rol, x[1] + rol / 6);
+    context.lineTo(x[0]+ rol *2/ 3, x[1] + rol / 6);
+    context.lineTo(x[0]+ rol *2/ 3, x[1]);
+    context.stroke();
+
+    context.moveTo(x[0] + rol *2/ 3 - 10, x[1]-10);
+    context.lineTo(x[0]+ rol *2/ 3 + rol+10, x[1]-10);
+    context.lineTo(x[0]+ rol *2/ 3 + rol+10, x[1] + rol / 6+10);
+    context.lineTo(x[0]+ rol *2/ 3-10, x[1] + rol / 6+10);
+    context.lineTo(x[0]+ rol *2/ 3-10, x[1]-10);
+    context.stroke();
+}
+
+function drawDetail5(){
+    x[1] += ov;
+
+    context.lineWidth = 1;
+    context.moveTo(x[0], x[1]);
+    context.lineTo(x[0], x[1] + wk);
+    context.lineTo(x[0] + shk /2, x[1] + wk + wk/5);
+    context.lineTo(x[0] + shk, x[1] + wk);
+    context.lineTo(x[0] + shk, x[1]);
+    context.lineTo(x[0], x[1]);
+    context.stroke();
+
+    context.moveTo(x[0] - 10, x[1] -10);
+    context.lineTo(x[0] -10, x[1] + wk+10);
+    context.lineTo(x[0] + shk /2, x[1] + wk + wk/5+10);
+    context.lineTo(x[0] + shk+10, x[1] + wk+10);
+    context.lineTo(x[0] + shk+10, x[1]-10);
+    context.lineTo(x[0]-10, x[1]-10);
+    context.stroke();
+
+    x[0] += shk * 3;
+    context.lineWidth = 1;
+    context.moveTo(x[0], x[1]);
+    context.lineTo(x[0], x[1] + wk/4);
+    context.lineTo(x[0] + shk /2, x[1] + wk/4 + wk/5);
+    context.lineTo(x[0] + shk, x[1] + wk/4);
+    context.lineTo(x[0] + shk, x[1]);
+    context.lineTo(x[0], x[1]);
+    context.stroke();
+
+    context.moveTo(x[0] - 10, x[1] -10);
+    context.lineTo(x[0] -10, x[1] + wk/4+10);
+    context.lineTo(x[0] + shk /2, x[1] + wk/4 + wk/5+10);
+    context.lineTo(x[0] + shk+10, x[1] + wk/4+10);
+    context.lineTo(x[0] + shk+10, x[1]-10);
+    context.lineTo(x[0]-10, x[1]-10);
+    context.stroke();
+
+    x[0] = z[0] - z1[0];
+    x[1] = 50;
+    context.lineWidth = 1;
+    context.moveTo(x[0] + ov / 2, x[1]);
+    context.lineTo(x[0] + ov / 2, x[1] + shk/2);
+    context.lineTo(x[0] + ov / 2+wk/4, x[1] + shk/2);
+    context.lineTo(x[0] + ov / 2+wk/4 + wk/5, x[1]);
+    context.moveTo(x[0] + ov / 2+wk/4, x[1] + shk/2);
+    context.lineTo(x[0] + ov / 2+wk*3/4, x[1] + shk/2);
+    context.lineTo(x[0] + ov / 2+wk*3/4 + wk/5, x[1]);
+    context.stroke();
+
+}
+
+function getPoint(y) {
+    return [x[0] + y[0], x[1] + y[1]];
+}
+
+function getPoints() {
     let on = +document.querySelector('input[name="ОН"]').value * 10;
     ov = +document.querySelector('input[name="ОВ"]').value * 10;
     let gg = +document.querySelector('input[name="Г"]').value * 10;
@@ -198,27 +319,32 @@ function getPoint(){
     let ot = +document.querySelector('input[name="От"]').value * 10;
     let n1m1 = +document.querySelector('input[name="Н1М1"]').value * 10;
     let zz1 = +document.querySelector('input[name="ЗЗ1"]').value * 10;
+    rol = +document.querySelector('input[name="РОЛ"]').value * 10;
+    shk = +document.querySelector('input[name="ШК"]').value * 10;
+    wk = +document.querySelector('input[name="ВК"]').value * 10;
+
 
     os = (shg - shpl) / 2;
     let pj = (og - shpl) / 2;
     let mj1 = (ot - shpl) / 2;
     let vz = zz1 / 3;
     let vz1 = zz1 / 3 * 2;
+    x0 = zz1;
 
-    s = [x0, y0];
-    o = [x0 + os, y0];
-    n = [x0 + os + on, y0];
-    v = [x0 + os, y0 + ov];
-    g = [x0, ov - gg];
-    p = [x0 + po + os, y0];
-    j = [x0 + po + os, y0 + pj];
+    s = [0, 0];
+    o = [os, 0];
+    n = [os + on, 0];
+    v = [os, ov];
+    g = [0, ov - gg];
+    p = [po + os, 0];
+    j = [po + os, pj];
     m = [(n[0] + p[0]) / 2, (n[1] + p[1]) / 2];
     j1 = [m[0], m[1] + mj1];
     j2 = [(j[0] + j1[0]) / 2, j[1]];
     z = [v[0] + vz, v[1]];
     z1 = [v[0] - vz1, v[1]];
     n1 = [n[0], n[1] + ov];
-    m1 = [n1[0], y0 + ov - n1m1];
+    m1 = [n1[0], ov - n1m1];
     tochka = [(n[0] + m[0]) / 2, (n[1] + m[1]) / 2];
     p1 = [n1[0] + zz1 / 3, n1[1]];
     p2 = [n1[0] - zz1 / 3 * 2, n1[1]];
@@ -228,7 +354,8 @@ function getPoint(){
     tochka2 = [p1[0], m21[1]];
 
     tochka0 = [(g[0] + z1[0]) / 2, j[1]];
-    tochka01 =[0, shpl];
+    tochka01 = [0, shpl];
+
 }
 
 function drawPoint(x, y, label) {
@@ -255,17 +382,19 @@ function drawPoint(x, y, label) {
     }
 }
 
-function download(){
+function download() {
     let image = canvas.toDataURL();
-    let tmpLink = document.createElement( 'a' );
+    let tmpLink = document.createElement('a');
     tmpLink.download = 'designer.png';
     tmpLink.href = image;
 
-    document.body.appendChild( tmpLink );
+    document.body.appendChild(tmpLink);
     tmpLink.click();
-    document.body.removeChild( tmpLink );
+    document.body.removeChild(tmpLink);
 }
 
+const hood = document.querySelector('.hood');
+const pocket = document.querySelector('.pocket');
 
 painting_init();
 document.querySelector('.button-pain')
@@ -275,6 +404,12 @@ document.querySelector('.button-pain')
         drawDetail1();
         drawDetail2();
         drawDetail3();
+        if(hood.querySelector('input').checked){
+            drawDetail4();
+        }
+        if(pocket.querySelector('input').checked){
+            drawDetail5();
+        }
     })
 document.querySelector('.button-dow')
     .addEventListener('click', function () {
@@ -291,3 +426,16 @@ modalOpenBtn.addEventListener('click', function (event) {
     modalWindow.style.display = 'block';
     event.preventDefault();
 })
+
+pocket.addEventListener('input', function (){
+    if(pocket.querySelector('input').checked){
+        for (par of pocket.querySelectorAll('.param-2')){
+            par.style.display = 'block';
+        }
+    }
+    else {
+        for (par of pocket.querySelectorAll('.param-2')){
+            par.style.display = 'none';
+        }    }
+})
+
