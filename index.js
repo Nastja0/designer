@@ -9,16 +9,21 @@ let tochka0;
 let tochka01;
 let rol;
 let shk, wk;
-let k = 3;
+let shkr, wkr;
+let k;
 
 function painting_init() {
+    k = 3;
     canvas = document.querySelector('.painting');
     canvas.width = +document.querySelector('input[name="ОН"]').value * 10 * 2;
     if(hood.querySelector('input').checked){
         k +=0.9;
     }
     if(pocket.querySelector('input').checked){
-        k+=0.5;
+        k+=0.8;
+    }
+    if(wings.querySelector('input').checked){
+        k+=0.8;
     }
     canvas.height = +document.querySelector('input[name="ОВ"]').value * 10 * k + 100;
     context = canvas.getContext("2d");
@@ -154,10 +159,11 @@ function drawDetail1() {
     context.lineTo(getPoint(tochka)[0], getPoint(tochka)[1] - 10);
     context.lineTo(getPoint(o)[0] - 10, getPoint(o)[1] - 10);
     context.stroke();
+
+    x[1] += ov * 4 / 5;
 }
 
 function drawDetail2() {
-    x[1] += ov * 4 / 5;
     context.lineWidth = 1;
     context.moveTo(getPoint(tochka0)[0], getPoint(tochka0)[1]);
     context.lineTo(getPoint(z1)[0], getPoint(z1)[1]);
@@ -189,10 +195,12 @@ function drawDetail2() {
     context.lineTo(getPoint(tochka2)[0] + 5, getPoint(tochka2)[1] - 10);
     context.lineTo(getPoint(j1)[0] - 15, getPoint(j1)[1] - 10);
     context.stroke();
+
+    x[1] += ov;
 }
 
 function drawDetail3() {
-    x[1] += ov * 4 / 3;
+    x[1] += 100;
     context.lineWidth = 1;
     context.moveTo(x[0], x[1]);
     context.quadraticCurveTo(x[0] + ov * 2 / 5, x[1] - 50,
@@ -211,10 +219,11 @@ function drawDetail3() {
         getPoint(tochka01)[0] - 10, getPoint(tochka01)[1] + 10)
     context.lineTo(x[0] - 10, x[1]-10);
     context.stroke();
+
+    x[1] += tochka01[1] + 100;
 }
 
 function drawDetail4(){
-    x[1] += ov;
 
     context.lineWidth = 1;
     context.moveTo(x[0], x[1]);
@@ -250,10 +259,74 @@ function drawDetail4(){
     context.lineTo(x[0]+ rol *2/ 3-10, x[1] + rol / 6+10);
     context.lineTo(x[0]+ rol *2/ 3-10, x[1]-10);
     context.stroke();
+
+    x[1] += rol *2/ 3 + 50;
 }
 
 function drawDetail5(){
-    x[1] += ov;
+
+    context.lineWidth = 1;
+    let type = document.querySelector('.wings')
+        .querySelector('.param-2')
+        .querySelector('select');
+
+    if (type
+        .querySelector(`option[value="${type.value}"]`).textContent  === "Ангелок") {
+        context.moveTo(x[0], x[1]+wkr / 5);
+        context.quadraticCurveTo(x[0] + shkr / 5, x[1] - wkr / 4,
+            x[0] + shkr, x[1] + wkr *5/6);
+        context.quadraticCurveTo(x[0] + shkr * 4 /5, x[1] +wkr * 6 /5,
+            x[0] + shkr /2, x[1] + wkr *4/5);
+        context.moveTo(x[0] + shkr *2/3, x[1] + wkr *17/18);
+        context.quadraticCurveTo(x[0] + shkr /2, x[1] +wkr * 6 /5,
+            x[0] , x[1] + wkr*2/3);
+        context.lineTo(x[0], x[1]+wkr / 5);
+        context.stroke();
+
+        context.moveTo(x[0] - 10, x[1]+wkr / 5 - 10);
+        context.quadraticCurveTo(x[0] + shkr / 5, x[1] - wkr / 4 - 10,
+            x[0] + shkr + 15, x[1] + wkr *5/6);
+        context.quadraticCurveTo(x[0] + shkr * 4 /5, x[1] +wkr * 6 /5 + 15,
+            x[0] + shkr /2, x[1] + wkr *4/5);
+        context.moveTo(x[0] + shkr *2/3 + 15, x[1] + wkr *17/18 + 5);
+        context.quadraticCurveTo(x[0] + shkr /2 - 10, x[1] +wkr * 6 /5 + 15,
+            x[0] -10, x[1] + wkr*2/3 + 10);
+        context.lineTo(x[0] - 10, x[1]+wkr / 5 - 10);
+        context.stroke();
+    }
+    else {
+        context.moveTo(x[0], x[1]+wkr / 5);
+        context.quadraticCurveTo(x[0] + shkr / 5, x[1] + wkr / 5,
+            x[0] + shkr / 4, x[1]);
+        context.quadraticCurveTo(x[0] + shkr*3/4, x[1],
+            x[0] + shkr , x[1] + wkr*2/3);
+        context.quadraticCurveTo(x[0] + shkr/2, x[1] +wkr/2,
+            x[0] + shkr / 2, x[1] + wkr);
+        context.quadraticCurveTo(x[0] + shkr/4, x[1] +wkr/2,
+            x[0], x[1] + wkr*2/3);
+        context.lineTo(x[0], x[1] + wkr/5);
+        context.stroke();
+
+        context.moveTo(x[0] - 10, x[1]+wkr / 5 - 10);
+        context.quadraticCurveTo(x[0] + shkr / 5 - 10, x[1] + wkr / 5 -10,
+            x[0] + shkr / 4 - 10, x[1] -10);
+        context.quadraticCurveTo(x[0] + shkr*3/4  + 10, x[1] - 15,
+            x[0] + shkr + 15, x[1] + wkr*2/3 + 10);
+        context.quadraticCurveTo(x[0] + shkr/2 + 10, x[1] +wkr/2 + 5,
+            x[0] + shkr / 2 + 5, x[1] + wkr + 15);
+        context.quadraticCurveTo(x[0] + shkr/4, x[1] +wkr/2 + 10,
+            x[0] - 10, x[1] + wkr*2/3 + 10);
+        context.lineTo(x[0] - 10, x[1] + wkr/5 - 10);
+        context.stroke();
+    }
+
+
+
+    x[1] += wkr + wk/5 + 50;
+
+}
+
+function drawDetail6(){
 
     context.lineWidth = 1;
     context.moveTo(x[0], x[1]);
@@ -272,25 +345,23 @@ function drawDetail5(){
     context.lineTo(x[0]-10, x[1]-10);
     context.stroke();
 
-    x[0] += shk * 3;
     context.lineWidth = 1;
-    context.moveTo(x[0], x[1]);
-    context.lineTo(x[0], x[1] + wk/4);
-    context.lineTo(x[0] + shk /2, x[1] + wk/4 + wk/5);
-    context.lineTo(x[0] + shk, x[1] + wk/4);
-    context.lineTo(x[0] + shk, x[1]);
-    context.lineTo(x[0], x[1]);
+    context.moveTo(x[0] + shk * 3, x[1]);
+    context.lineTo(x[0]+shk * 3, x[1] + wk/4);
+    context.lineTo(x[0] + shk /2+shk * 3, x[1] + wk/4 + wk/5);
+    context.lineTo(x[0] + shk+shk * 3, x[1] + wk/4);
+    context.lineTo(x[0] + shk+shk * 3, x[1]);
+    context.lineTo(x[0]+shk * 3, x[1]);
     context.stroke();
 
-    context.moveTo(x[0] - 10, x[1] -10);
-    context.lineTo(x[0] -10, x[1] + wk/4+10);
-    context.lineTo(x[0] + shk /2, x[1] + wk/4 + wk/5+10);
-    context.lineTo(x[0] + shk+10, x[1] + wk/4+10);
-    context.lineTo(x[0] + shk+10, x[1]-10);
-    context.lineTo(x[0]-10, x[1]-10);
+    context.moveTo(x[0] - 10+shk * 3, x[1] -10);
+    context.lineTo(x[0] -10+shk * 3, x[1] + wk/4+10);
+    context.lineTo(x[0] + shk /2+shk * 3, x[1] + wk/4 + wk/5+10);
+    context.lineTo(x[0] + shk+10+shk * 3, x[1] + wk/4+10);
+    context.lineTo(x[0] + shk+10+shk * 3, x[1]-10);
+    context.lineTo(x[0]-10+shk * 3, x[1]-10);
     context.stroke();
 
-    x[0] = z[0] - z1[0];
     x[1] = 50;
     context.lineWidth = 1;
     context.moveTo(x[0] + ov / 2, x[1]);
@@ -322,6 +393,9 @@ function getPoints() {
     rol = +document.querySelector('input[name="РОЛ"]').value * 10;
     shk = +document.querySelector('input[name="ШК"]').value * 10;
     wk = +document.querySelector('input[name="ВК"]').value * 10;
+    shkr = +document.querySelector('input[name="ШКР"]').value * 10;
+    wkr = +document.querySelector('input[name="ВКР"]').value * 10;
+
 
 
     os = (shg - shpl) / 2;
@@ -395,6 +469,7 @@ function download() {
 
 const hood = document.querySelector('.hood');
 const pocket = document.querySelector('.pocket');
+const wings = document.querySelector('.wings');
 
 painting_init();
 document.querySelector('.button-pain')
@@ -407,8 +482,11 @@ document.querySelector('.button-pain')
         if(hood.querySelector('input').checked){
             drawDetail4();
         }
-        if(pocket.querySelector('input').checked){
+        if(wings.querySelector('input').checked){
             drawDetail5();
+        }
+        if(pocket.querySelector('input').checked){
+            drawDetail6();
         }
     })
 document.querySelector('.button-dow')
@@ -439,3 +517,14 @@ pocket.addEventListener('input', function (){
         }    }
 })
 
+wings.addEventListener('input', function (){
+    if(wings.querySelector('input').checked){
+        for (par of wings.querySelectorAll('.param-2')){
+            par.style.display = 'block';
+        }
+    }
+    else {
+        for (par of wings.querySelectorAll('.param-2')){
+            par.style.display = 'none';
+        }    }
+})
